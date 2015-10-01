@@ -1,0 +1,33 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "do_api_token": "{{env `DIGITALOCEAN_ACCESS_TOKEN`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "eu-west-1",
+    "source_ami": "ami-5da23a2a",
+    "instance_type": "t1.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "disthttp-test {{timestamp}}"
+  },{
+    "type": "digitalocean",
+    "api_token": "{{user `do_api_token`}}",
+    "image": "ubuntu-14-04-x64",
+    "region": "nyc3",
+    "size": "512mb"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "pause_before": "30s",
+    "inline": [
+      "sleep 30",
+      "sudo apt-get update",
+      "sudo apt-get install -y redis-server"
+    ]
+  }]
+}
+
