@@ -1,0 +1,22 @@
+{
+  "variables": {
+    "do_api_token": "{{env `DIGITALOCEAN_ACCESS_TOKEN`}}"
+  },
+  "builders": [{
+    "type": "digitalocean",
+    "api_token": "{{user `do_api_token`}}",
+    "image": "ubuntu-14-04-x64",
+    "region": "sfo1",
+    "size": "512mb",
+    "snapshot_name": "zulip-{{timestamp}}",
+    "state_timeout": "15m"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "scripts": [
+      "personal/provision.sh",
+      "zulip/provision.sh"
+    ]
+  }]
+}
+
