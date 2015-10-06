@@ -18,22 +18,13 @@
     "api_token": "{{user `do_api_token`}}",
     "image": "ubuntu-14-04-x64",
     "region": "nyc3",
-    "size": "512mb"
+    "size": "4gb"
   }],
   "provisioners": [{
     "type": "shell",
     "pause_before": "30s",
-    "inline": [
-      "sleep 30",
-      "sudo apt-get update",
-      "sudo apt-get install -y redis-server git",
-      "git clone https://gitlab.com/jfbrown/dotfiles.git",
-      "export TERM=screen-256color && cd dotfiles && ./linux.sh"
-    ]
-  },{
-    "type": "shell",
     "scripts": [
-      "./bootstrap.sh"
+      "./disthttp/bootstrap.sh"
     ]
   }]
 }
